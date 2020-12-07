@@ -126,7 +126,7 @@ input {
 }
 
 .sider-button-box button {
-  width: 50%;
+  width: 100px;
   height: 50px;
   margin-left: 5px;
   margin-right: 5px;

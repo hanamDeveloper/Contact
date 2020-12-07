@@ -68,9 +68,10 @@ function Sider() {
           <button type="button" onClick={onClickAll}>
             전체보기
           </button>
-          <button type="button">
-            <Link to={"/user/addUser"}>추가</Link>
-          </button>
+
+          <Link to={"/user/addUser"}>
+            <button type="button">추가</button>
+          </Link>
         </div>
         <div className="sider__ul-box">
           <ul>

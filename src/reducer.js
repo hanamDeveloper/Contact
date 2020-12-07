@@ -26,11 +26,6 @@ export function reducer(state = initialState, action) {
       });
 
     case "CHANGE_VALUE":
-      console.log(state.users);
-      console.log(
-        "id야 id 씨발 idk라고 존나 잘나오라고좀",
-        state.selectedUser.id
-      );
       return produce(state, (draft) => {
         draft.input.name = "";
         draft.input.number = "";
@@ -45,8 +40,6 @@ export function reducer(state = initialState, action) {
       });
 
     case "SERCH_USER":
-      console.log("state.input", state.input);
-      console.log("action.name", action.name);
       return produce(state, (draft) => {
         draft.input.serch = "";
         const i = draft.serchUser.filter((user) => user.name === action.serch);

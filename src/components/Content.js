@@ -26,15 +26,18 @@ function Content() {
     });
   };
 
-  const onChange = useCallback((e) => {
-    const { name, value } = e.target;
+  const onChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    dispatch({
-      type: "CHANGE_INPUT",
-      name,
-      value,
-    });
-  }, []);
+      dispatch({
+        type: "CHANGE_INPUT",
+        name,
+        value,
+      });
+    },
+    [dispatch]
+  );
 
   return (
     <div className="content-container">
