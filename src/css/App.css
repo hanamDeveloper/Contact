@@ -58,6 +58,15 @@ input {
   color: #afd1ff;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
 .content-container__information input {
   width: 90%;
   margin-top: 30px;
@@ -78,7 +87,7 @@ input {
 
 .container {
   margin: 0 auto;
-  width: 95%;
+  width: 80%;
   height: 930px;
 }
 
@@ -94,21 +103,21 @@ input {
 }
 
 .center-container {
-  position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-around;
   width: 100%;
   height: 70%;
+  margin-right: 500px;
 }
 
 /* sider */
 
 .sider {
-  /* position: relative; */
   display: inline-flex;
   flex-direction: column;
   width: 25%;
-  height: 80%;
+  height: 100%;
   margin: 0;
 }
 
@@ -121,16 +130,23 @@ input {
   top: 65px;
   padding-top: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   width: 100%;
 }
 
 .sider-button-box button {
-  width: 100px;
+  width: 30%;
   height: 50px;
-  margin-left: 5px;
-  margin-right: 5px;
   border-radius: 9px;
+  font-size: 1.125rem;
+}
+
+.sider-button-box a {
+  width: 30%;
+}
+
+.sider-button-box a button {
+  width: 100%;
 }
 
 .sider__ul-box {
@@ -156,44 +172,45 @@ input {
   padding-top: 8px;
   padding-bottom: 8px;
   border-bottom: 1px solid #00bfff;
+  position: relative;
 }
 
 .sider__ul__li__button {
   display: flex;
+  height: 33px;
   align-content: center;
   justify-content: center;
-  margin-left: 40px;
+  position: absolute;
+  right: 0px;
+  /* margin-left: 40px; */
 }
 
 .sider ul li button {
   width: 100%;
-  margin-left: 10px;
 }
 
 /* content */
 
+.Link {
+  width: 65%;
+  float: left;
+}
+
 .content-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 75%;
   height: 100%;
-  margin: 0 auto;
+}
+
+.content-container img {
+  width: 300px;
+  height: 200px;
+  border-radius: 50%;
 }
 
 .content-container__information {
-  position: absolute;
-  left: 50%;
-  margin: 0 0 0 -250px;
-  display: flex;
-  width: 500px;
-  height: 80%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   border: 2px solid gray;
   border-radius: 30px;
+  width: 570px;
+  height: 100%;
 }
 
 .footer {

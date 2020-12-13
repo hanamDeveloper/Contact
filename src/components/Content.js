@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -12,59 +12,63 @@ function Content() {
 
   const onClickAdd = async () => {
     const user = {
-      id: users.length + 1,
-      name: input.name,
-      number: input.number,
-      memo: input.memo,
+      no: users[0].no + 1,
+      name: input.Name,
+      tel: input.tel,
+      address: input.address,
     };
 
-    await axios.post("http://localhost:5000/users", user);
+    await axios.post("http://sample.bmaster.kro.kr/contacts", user);
 
     dispatch({
       type: "ADD_USER",
       user,
     });
+    const response = await axios.get("http://sample.bmaster.kro.kr/contacts");
+    dispatch({
+      type: "LOAD_USER",
+      response,
+    });
   };
 
-  const onChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
+  const onChange = (e) => {
+    const { name, value } = e.target;
 
-      dispatch({
-        type: "CHANGE_INPUT",
-        name,
-        value,
-      });
-    },
-    [dispatch]
-  );
+    dispatch({
+      type: "CHANGE_INPUT",
+      name,
+      value,
+    });
+  };
 
   return (
     <div className="content-container">
+      <iframe name="iframe1" style={{ display: "none" }}></iframe>
       <div className="content-container__information">
-        <input
-          onChange={onChange}
-          name="name"
-          value={input.name}
-          placeholder="이름을 입력해주세요"
-        />
+        <form>
+          <img src=""></img>
+          <input
+            onChange={onChange}
+            name="Name"
+            value={input.Name}
+            placeholder="이름을 입력해주세요"
+          />
 
-        <input
-          onChange={onChange}
-          name="number"
-          value={input.number}
-          placeholder="전화번호를 입력해주세요"
-        />
+          <input
+            onChange={onChange}
+            name="tel"
+            value={input.tel}
+            placeholder="전화번호를 입력해주세요"
+          />
 
-        <textarea
-          name="memo"
-          onChange={onChange}
-          value={input.memo}
-          placeholder="메모를 입력해주세요"
-        ></textarea>
-        <button type="button" onClick={onClickAdd}>
-          추가
-        </button>
+          <input
+            onChange={onChange}
+            name="address"
+            value={input.address}
+            placeholder="주소를 입력해주세요"
+          />
+          <input type="submit" onClick={onClickAdd} value="추가" />
+        </form>
       </div>
     </div>
   );

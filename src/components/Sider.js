@@ -21,32 +21,40 @@ function Sider() {
     });
   };
 
-  const onClickSerch = () => {
-    const serch = input.serch;
+  const onClickSerch = async () => {
+    const searchUser = await axios.get(
+      `http://sample.bmaster.kro.kr/contacts/search/${input.name}`
+    );
     dispatch({
-      type: "SERCH_USER",
-      serch,
+      type: "SEARCH_USER",
+      searchUser,
     });
   };
 
-  const onClickRemove = async (id) => {
-    await axios.delete(`http://localhost:5000/users/${id}`);
+  const onClickRemove = async (no) => {
+    await axios.delete(`http://sample.bmaster.kro.kr/contacts/${no}`);
+    const response = await axios.get("http://sample.bmaster.kro.kr/contacts");
     dispatch({
-      type: "REMOVE_USER",
-      id,
+      type: "LOAD_USER",
+      response,
     });
   };
 
-  const onClickSelectedUser = async (id) => {
+  const onClickSelectedUser = async (no) => {
+    const selectedUser = await axios.get(
+      `http://sample.bmaster.kro.kr/contacts/${no}`
+    );
     dispatch({
-      type: "SELECTED_USER",
-      id,
+      type: "SELECTE_USER",
+      selectedUser,
     });
   };
 
-  const onClickAll = () => {
+  const onClickAll = async () => {
+    const response = await axios.get("http://sample.bmaster.kro.kr/contacts");
     dispatch({
-      type: "CLICK_ALL",
+      type: "LOAD_USER",
+      response,
     });
   };
 
@@ -55,9 +63,9 @@ function Sider() {
       <div className="sider">
         <div className="input-box">
           <input
-            name="serch"
+            name="name"
             onChange={onChange}
-            value={input.serch}
+            value={input.name}
             placeholder="이름을 입력해주세요"
           />
         </div>
@@ -76,10 +84,12 @@ function Sider() {
         <div className="sider__ul-box">
           <ul>
             {users.map((user) => (
-              <li key={user.id} onClick={() => onClickSelectedUser(user.id)}>
-                <Link to={`/user/View/${user.id}`}>{user.name}</Link>
+              <li key={user.no} onClick={() => onClickSelectedUser(user.no)}>
+                <Link className="Link" to={`/user/View/${user.no}`}>
+                  {user.name}
+                </Link>
                 <div className="sider__ul__li__button">
-                  <button type="button" onClick={() => onClickRemove(user.id)}>
+                  <button type="button" onClick={() => onClickRemove(user.no)}>
                     삭제
                   </button>
                 </div>

@@ -1,68 +1,80 @@
-import React, { useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-function View() {
-  const { selectedUser, input, users } = useSelector((state) => ({
+function View({ match }) {
+  const { selectedUser, input } = useSelector((state) => ({
     selectedUser: state.selectedUser,
     input: state.input,
-    users: state.users,
   }));
-
   const dispatch = useDispatch();
 
-  const onChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
+  const onChange = (e) => {
+    const { name, value } = e.target;
 
-      dispatch({
-        type: "CHANGE_INPUT",
-        name,
-        value,
-      });
-    },
-    [dispatch]
-  );
-
-  const onClickChangeValue = async () => {
-    const user = users.find((user) => user);
-    await axios.put(`http://localhost:5000/users/${selectedUser.id}`, {
-      ...user,
-      name: input.name,
-      number: input.number,
-      memo: input.memo,
+    dispatch({
+      type: "CHANGE_INPUT",
+      name,
+      value,
     });
+  };
+
+  const onClickPut = async () => {
+    await axios.put(
+      `http://sample.bmaster.kro.kr/contacts/${match.params.no}`,
+      {
+        ...selectedUser,
+        no: match.params.no,
+        name: input.Name,
+        tel: input.tel,
+        address: input.address,
+      }
+    );
     dispatch({
       type: "CHANGE_VALUE",
-      input,
+    });
+    const response = await axios.get("http://sample.bmaster.kro.kr/contacts");
+    dispatch({
+      type: "LOAD_USER",
+      response,
     });
   };
 
   return (
     <div className="content-container">
+      <iframe name="iframe1" style={{ display: "none" }}></iframe>
       <div className="content-container__information">
-        <input
-          type="text"
-          name="name"
-          placeholder={selectedUser.name}
-          value={input.name}
-          onChange={onChange}
-        />
-        <input
-          name="number"
-          placeholder={selectedUser.number}
-          value={input.number}
-          onChange={onChange}
-        />
-        <textarea
-          name="memo"
-          placeholder={selectedUser.memo}
-          value={input.memo}
-          onChange={onChange}
-        ></textarea>
-        <button onClick={onClickChangeValue} type="button">
-          수정
-        </button>
+        <form
+          method="post"
+          enctype="multipart/form-data"
+          action={`http://sample.bmaster.kro.kr/contacts/${match.params.no}/photo`}
+          target="iframe1"
+        >
+          <img src={selectedUser.photo}></img>
+          <input
+            onChange={onChange}
+            name="Name"
+            value={input.Name}
+            placeholder={selectedUser.name}
+          />
+
+          <input
+            onChange={onChange}
+            name="tel"
+            value={input.tel}
+            placeholder={selectedUser.tel}
+          />
+
+          <input
+            onChange={onChange}
+            name="address"
+            value={input.address}
+            placeholder={selectedUser.address}
+          />
+
+          <input type="file" name="photo" />
+          <input type="submit" onClick={onClickPut} value="수정" />
+        </form>
       </div>
     </div>
   );

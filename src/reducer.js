@@ -3,12 +3,12 @@ import produce from "immer";
 export const initialState = {
   users: [],
   selectedUser: {},
-  serchUser: [],
+  searchUser: [],
   input: {
-    serch: "",
+    Name: "",
     name: "",
-    number: "",
-    memo: "",
+    tel: "",
+    address: "",
   },
 };
 
@@ -16,8 +16,7 @@ export function reducer(state = initialState, action) {
   switch (action.type) {
     case "LOAD_USER":
       return produce(state, (draft) => {
-        draft.users = action.response.data;
-        draft.serchUser = action.response.data;
+        draft.users = action.response.data.contacts;
       });
 
     case "CHANGE_INPUT":
@@ -27,49 +26,29 @@ export function reducer(state = initialState, action) {
 
     case "CHANGE_VALUE":
       return produce(state, (draft) => {
-        draft.input.name = "";
-        draft.input.number = "";
-        draft.input.memo = "";
-        draft.selectedUser.name = action.input.name;
-        draft.selectedUser.number = action.input.number;
-        draft.selectedUser.memo = action.input.memo;
-        draft.users = state.users.filter(
-          (user) => user.id !== state.selectedUser.id
-        );
-        draft.users.push(draft.selectedUser);
+        draft.input.Name = "";
+        draft.input.tel = "";
+        draft.input.address = "";
       });
 
-    case "SERCH_USER":
+    case "SEARCH_USER":
       return produce(state, (draft) => {
-        draft.input.serch = "";
-        const i = draft.serchUser.filter((user) => user.name === action.serch);
-        draft.users = i;
+        draft.users = action.searchUser.data;
+        draft.input.name = "";
       });
 
     case "ADD_USER":
       return produce(state, (draft) => {
         draft.users.push(action.user);
-        draft.input.name = "";
-        draft.input.number = "";
-        draft.input.memo = "";
+        draft.input.Name = "";
+        draft.input.tel = "";
+        draft.input.address = "";
       });
 
-    case "REMOVE_USER":
+    case "SELECTE_USER":
       return produce(state, (draft) => {
-        const remove = draft.users.filter((user) => user.id !== action.id);
-        draft.users = remove;
+        draft.selectedUser = action.selectedUser.data;
       });
-
-    case "SELECTED_USER":
-      return produce(state, (draft) => {
-        draft.selectedUser = draft.users.find((user) => user.id === action.id);
-      });
-
-    case "CLICK_ALL":
-      return {
-        ...state,
-        users: state.serchUser,
-      };
 
     default:
       return state;
