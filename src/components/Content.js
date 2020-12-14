@@ -46,7 +46,7 @@ function Content() {
       <iframe name="iframe1" style={{ display: "none" }}></iframe>
       <div className="content-container__information">
         <form>
-          <img src=""></img>
+          <img></img>
           <input
             onChange={onChange}
             name="Name"
