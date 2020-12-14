@@ -38,6 +38,7 @@ export function reducer(state = initialState, action) {
       });
 
     case "ADD_USER":
+      console.log("ADDUSER", state.users);
       return produce(state, (draft) => {
         draft.users.push(action.user);
         draft.input.Name = "";
